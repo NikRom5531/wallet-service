@@ -1,38 +1,26 @@
 spring:
   application:
     name: wallet-service
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
-    hikari:
-      maximum-pool-size: 20          # Максимум соединений
-      minimum-idle: 5                # Минимум в режиме простоя
-      idle-timeout: 30000            # Через какое время закрывать неиспользуемые (ms)
-      max-lifetime: 120000           # Максимальное время жизни соединения
-      connection-timeout: 5000       # Максимальное время ожидания из очереди
-      leak-detection-threshold: 5000 # Детектирование "потерянных" соединений
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: false
     open-in-view: false
   liquibase:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}
     change-log: db/changelog/db.changelog-master.xml
     enabled: true
-
-server:
-  port: 8080
-
-#logging:
-#  level:
-#    ru.romanov.wallet: DEBUG
-#    org.hibernate.SQL: DEBUG
-#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
 
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+    enabled: true
   api-docs:
     path: /api-docs

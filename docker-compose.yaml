@@ -1,25 +1,28 @@
+version: '3.8'
+
 services:
-  wallet-service:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    environment:
-      SPRING_DATASOURCE_URL: 'jdbc:postgresql://db:5432/${DB_NAME}'
-      SPRING_DATASOURCE_USERNAME: '${DB_USER}'
-      SPRING_DATASOURCE_PASSWORD: '${DB_PASSWORD}'
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
   postgres:
+    container_name: postgres
     image: 'postgres:latest'
     env_file:
       - .env
     environment:
-      POSTGRES_DB: '${DB_NAME}'
-      POSTGRES_PASSWORD: '${DB_PASSWORD}'
-      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
     ports:
       - '5432'
+  wallet-service:
+    container_name: wallet-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      DB_PORT: 5432
+      DB_HOST: postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres

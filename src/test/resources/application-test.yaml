@@ -1,0 +1,11 @@
+#spring:
+#  liquibase:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/test_wallet_db
+#    user: postgres
+#    password: postgres
+#    enabled: true
+#  r2dbc:
+#    url: r2dbc:postgresql://localhost:5432/test_wallet_db
+#    username: postgres
+#    password: postgres

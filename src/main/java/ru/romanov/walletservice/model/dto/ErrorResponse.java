@@ -2,16 +2,19 @@ package ru.romanov.walletservice.model.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class ErrorResponse {
-
-    private boolean success;
+    private String timestamp;
+    private String statusName;
+    private int statusCode;
     private String message;
-    private Object data;
 
-    public ErrorResponse(boolean success, String message, Object data) {
-        this.success = success;
+    public ErrorResponse(int statusCode, String message, String statusName) {
+        this.statusCode = statusCode;
         this.message = message;
-        this.data = data;
+        this.statusName = statusName;
+        this.timestamp = LocalDateTime.now().toString();
     }
 }
